@@ -1,0 +1,23 @@
+.DebouncedValue {
+    width: fit-content;
+    margin: auto;
+    
+    & input {
+        width: 500px;
+        height: 64px;
+        font-size: 32px;
+        line-height: 32px;
+        padding: 36px 24px;
+        border-radius: 16px;
+    }
+
+    & .debounced-value {
+        font-size: 24px;
+        font-weight: bold;
+        padding: 8px 12px;
+
+        .label {
+            margin-right: 12px;
+        }
+    }
+}

@@ -1,0 +1,33 @@
+.ComponentScrolling {
+    height: 200vh;
+    width: fit-content;
+    margin: auto;
+    padding-top: 256px;
+
+    & .scroll-component {
+        text-align: center;
+        font-size: 32px;
+        background-color: grey;
+        border-radius: 24px;
+    }
+
+    & .debounce-checkbox-wrapper {
+        width: fit-content;
+        margin-bottom: 32px;
+        display: flex;
+
+        & .debounce-checkbox-label {
+            font-size: 32px;
+            line-height: 32px;
+            padding: 0px 16px;
+            margin: auto;
+            flex-grow: 1;
+        }
+
+        & .debounce-checkbox-input {
+            flex-shrink: 1;
+            flex-basis: auto;
+            width: 64px;
+        }
+    }
+}
