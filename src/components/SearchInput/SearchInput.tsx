@@ -1,13 +1,13 @@
 import { ChangeEvent, useRef } from 'react';
 import './SearchInput.css';
-import { useDebounceFunc } from '../../utils/debounce/debounceService';
+import { useDebounceCallback } from '../../utils/debounce/debounceService';
 
 const SearchInput = () => {
     const useDebounce = useRef(false);
     const handleOnChange = (message: string) => {
         console.log(message);
     };
-    const [debounceHandleOnChange] = useDebounceFunc(handleOnChange, { debounceTime: 5000 });
+    const [debounceHandleOnChange, { isPending }] = useDebounceCallback(handleOnChange, { debounceTime: 10000 });
 
     const onChangeCallback = (_event: ChangeEvent<HTMLInputElement>) => {
         if (useDebounce.current) {
