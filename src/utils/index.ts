@@ -1,11 +1,7 @@
-export const debounce = (func, debounceTime) => {
-    console.log("Outer Closer");
-    setTimeout(() => {
-        console.log("After Timeout Exec")
-        func();
-    }, debounceTime)
-}
+import debounceService from './debounce';
+import throttleService from './throttle';
 
-export default {
-    debounce,
+export {
+    debounceService,
+    throttleService,
 }

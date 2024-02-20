@@ -1,8 +1,8 @@
 import "./App.css";
 import { 
     SearchInput,
-    DebouncedValue,
-    ComponentScrolling,
+    // DebouncedValue,
+    // ComponentScrolling,
 } from './components';
 
 const App = () => {

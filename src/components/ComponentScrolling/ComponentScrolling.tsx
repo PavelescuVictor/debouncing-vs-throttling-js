@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useRef, useCallback } from 'react';
 import './ComponentScrolling.css';
-import { useDebounceFunc } from '../../utils/debounce/debounceService';
+import { debounceService } from '../../utils';
+
+const useDebounceCallback = debounceService.useDebounceCallback
 
 const ComponentScrolling = () => {
     const useDebounce = useRef(false);
@@ -8,7 +10,7 @@ const ComponentScrolling = () => {
     const scrollHandler = (message: string) => {
         console.log(message);
     };
-    const [debouncedScrollHandler] = useDebounceFunc(scrollHandler, 5000);
+    const [debouncedScrollHandler] = useDebounceCallback(scrollHandler, { debounceTime: 5000 });
 
     const listenerAction = useCallback(() => {
         if (useDebounce.current) { 

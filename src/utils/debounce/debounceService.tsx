@@ -27,7 +27,7 @@ interface IDebounceConfig {
     trailing?: boolean,
 }
 
-export const debounce = (func: Function, debounceConfig: IDebounceConfig): Function => {
+export const debounce = (callback: Function, debounceConfig: IDebounceConfig): Function => {
     const {
         debounceTime = 1000,
         maxWaitCalls = Infinity,
@@ -45,14 +45,14 @@ export const debounce = (func: Function, debounceConfig: IDebounceConfig): Funct
 
     const maxWaitReset = (...args: any) => {
         if (currentWaitAmount >= maxWaitCalls) {
-            func(...args);
+            callback(...args);
             currentWaitAmount = 0;
         }
     }
 
     const handleNewTimeout = (...args: any) => {
         timeoutId = setTimeout(() => {
-            func(...args);
+            callback(...args);
         }, debounceTime)
     }
 
@@ -92,7 +92,7 @@ export const useDebounceValue = (value: any, debounceConfig: IDebounceConfig): A
     return [debouncedValue]
 }
 
-export const useDebounceCallback = (func: Function, debounceConfig: IDebounceConfig): Array<any> => {
+export const useDebounceCallback = (callback: Function, debounceConfig: IDebounceConfig): Array<any> => {
     const {
         debounceTime = 1000,
         maxWaitCalls = Infinity,
@@ -106,12 +106,12 @@ export const useDebounceCallback = (func: Function, debounceConfig: IDebounceCon
     let lastDebouncedCall = useRef<number>(-1);
 
     /**
-     * Handles func calls when leading is set to true
+     * Handles callback calls when leading is set to true
      * @param args
      */
     const handleLeading = (args: any) => {
         if (leading) {
-            func(...args);
+            callback(...args);
         }
     }
 
@@ -134,11 +134,11 @@ export const useDebounceCallback = (func: Function, debounceConfig: IDebounceCon
      */
     const maxWaitReset = (...args: any) => {
         if (currentSkippedAmount.current >= maxWaitCalls) {
-            func(...args);
+            callback(...args);
             currentSkippedAmount.current = 0;
         }
         if (lastDebouncedCall.current !== -1 && new Date(Date.now()).getTime() - lastDebouncedCall.current>= maxWaitTime) {
-            func(...args);
+            callback(...args);
             lastDebouncedCall.current === -1;
         }
     }
@@ -150,27 +150,27 @@ export const useDebounceCallback = (func: Function, debounceConfig: IDebounceCon
     const handleNewTimeout = (...args: any) => {
         handleLeading(args);
         timeoutId.current = setTimeout(() => {
-            func(...args);
+            callback(...args);
         }, debounceTime)
     }
 
     /**
-     * Returning true if the debounce function is still waiting for a call to be triggered
+     * Returning true if the debounce callback is still waiting for a call to be triggered
      */
     const isPending = useCallback(() => {
         return timeoutId.current !== -1 ? true : false;
     }, [])
 
     /**
-     * The debunced function
+     * The debunced callback
      */
-     const debouncedFunc = (...args: any) => {
+     const debouncedCallback = (...args: any) => {
         sanitizeCurrentTimeout();
         maxWaitReset(...args);
         handleNewTimeout(...args);
     }
 
-    return [debouncedFunc, { isPending }];
+    return [debouncedCallback, { isPending }];
 }
 
 export default {
