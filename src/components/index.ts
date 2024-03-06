@@ -1,11 +1,9 @@
-import SearchInput from './SearchInput';
 import DebouncedValue from './DebouncedValue'; 
 import ComponentScrolling from './ComponentScrolling';
-import CircularTimer from './CircularTimer';
+import DebounceThrottle from './DebounceThrottle/DebounceThrottle';
 
 export {
-    SearchInput,
     DebouncedValue,
     ComponentScrolling,
-    CircularTimer,
+    DebounceThrottle,
 }
