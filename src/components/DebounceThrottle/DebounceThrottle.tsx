@@ -36,7 +36,7 @@ const DebounceThrottle = () => {
     const {
         state: {
             visible: useAdvance,
-        }
+        },
     } = useContext(AdvanceControllerContext);
 
     // Debounce toggle
@@ -80,7 +80,7 @@ const DebounceThrottle = () => {
             <span> - VS - </span>
             <span> Throttle </span>
         </div>
-        <div className={ `checkboxes-wrapper${ useAdvance ? 'advance-panel-open' : '' }` }>
+        <div className={ `checkboxes-wrapper ${ useAdvance ? 'advance-panel-open' : '' }` }>
             <div className="checkbox-wrapper debounce">
                 <label className="checkbox-label" htmlFor="debounce"> Debounce </label>
                 <input className="checkbox-input debounce" id="debounce" type="checkbox" onChange={ onDebounceCheckboxChange }/>
@@ -93,7 +93,7 @@ const DebounceThrottle = () => {
         <AdvanceController />
         <InputController startTimer={startTimer} resetTimer={resetTimer}/>
         <ResultsController useDebounce={useDebounce} useThrottle={useThrottle} remainingTime={remainingTime} resetTimer={resetTimer}  toggleTimeline={toggleTimeline}/>
-        { useTimeline && <TimelineController /> }
+        <TimelineController active={useTimeline}/>
     </div>
 }
 

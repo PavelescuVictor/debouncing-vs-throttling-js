@@ -2,9 +2,17 @@ import {
     Provider,
 } from 'react';
 
+export type ActionReturnType = void;
+export type Action = (currentState: any, actions: IContextActions) => ActionReturnType;
+export interface IContextActions {
+    [key: string]: Action
+}
+
 interface ProviderItem<T> {
+    key?: string
     provider: any
     initialState: any
+    actions: IContextActions
     specificProvider: Provider<T>
 }
 
@@ -19,15 +27,15 @@ interface AccupumatorProps {
 }
 
 const ProviderCumulator = <T extends unknown>(providers: ProviderItems<T>) => providers.reduce(
-    (AcumulatedProviders:any, { provider: Provider, ...props }:ProviderItem<T>) => 
-        ({ children }:AccupumatorProps) => (
+    (AcumulatedProviders: any, { provider: Provider, ...props }: ProviderItem<T>) => 
+        ({ children }: AccupumatorProps) => (
             <AcumulatedProviders>
                 <Provider {...props}>
                     <>{ children }</>
                 </Provider>
             </AcumulatedProviders>
         ),
-    ({ children }:AccupumatorProps) => <>{ children }</>
+    ({ children }: AccupumatorProps) => <>{ children }</>
 )
 
 export default ProviderCumulator;

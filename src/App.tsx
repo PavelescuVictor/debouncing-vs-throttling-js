@@ -6,25 +6,33 @@ import {
     ContextProvider,
 } from './providers'
 import {
-    initialContextState as advanceInitialContextState
+    key as AdvanceControllerKey,
+    initialContextState as advanceInitialContextState,
+    actions as advanceActions,
 } from './contexts/AdvanceControllerContext/AdvanceControllerContext';
 import {
     IInitialContextState as IInitialAdvanceContextState
 } from './contexts/AdvanceControllerContext/AdvanceControllerContext.types';
 import {
-    initialContextState as debounceInitialContextState
+    key as DebounceControllerKey,
+    initialContextState as debounceInitialContextState,
+    actions as debounceActions,
 } from './contexts/DebounceControllerContext/DebounceControllerContext';
 import {
     IInitialContextState as IInitialDebounceContextState
 } from './contexts/DebounceControllerContext/DebounceControllerContext.types';
 import {
-    initialContextState as throttleInitialContextState
+    key as ThrottleControllerKey,
+    initialContextState as throttleInitialContextState,
+    actions as throttleActions,
 } from './contexts/ThrottleControllerContext/ThrottleControllerContext';
 import {
     IInitialContextState as IInitialThrottleContextState
 } from './contexts/ThrottleControllerContext/ThrottleControllerContext.types';
 import {
-    initialContextState as resultsInitialContextState
+    key as ResultsControllerKey,
+    initialContextState as resultsInitialContextState,
+    actions as resultsActions,
 } from './contexts/ResultsControllerContext/ResultsControllerContext';
 import {
     IInitialContextState as IInitialResultsContextState
@@ -45,28 +53,39 @@ const ResultsProvider = ContextProvider<IInitialResultsContextState>;
 
 const providers: ProviderItems<IInitialAdvanceContextState | IInitialDebounceContextState | IInitialThrottleContextState | IInitialResultsContextState> = [
     {
+        key: AdvanceControllerKey,
         provider: AdvanceProvider,
         initialState: advanceInitialContextState,
+        actions: advanceActions,
         specificProvider: AdvanceControllerContext.Provider,
     },
     { 
+        key: DebounceControllerKey,
         provider: DebounceProvider,
         initialState: debounceInitialContextState,
+        actions: debounceActions,
         specificProvider: DebounceControllerContext.Provider,
     },
     {
+        key: ThrottleControllerKey,
         provider: ThrottleProvider,
         initialState: throttleInitialContextState,
+        actions: throttleActions,
         specificProvider: ThrottleControllerContext.Provider,
     },
     {
+        key: ResultsControllerKey,
         provider: ResultsProvider,
         initialState: resultsInitialContextState,
+        actions: resultsActions,
         specificProvider: ResultsControllerContext.Provider,
     }
 ]
 
 const MainProvider = ProviderCumulator(providers);
+
+// const providers = [];
+// const MainProvider = ProviderMerger(providers);
 
 const App = () => {
     return <div className="App">

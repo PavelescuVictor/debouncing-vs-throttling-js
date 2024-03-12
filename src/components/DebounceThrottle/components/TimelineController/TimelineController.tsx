@@ -8,9 +8,16 @@ import {
     ThrottletimelinePointType,
 } from '../Timeline/Timeline.types';
 import Timeline from '../Timeline';
+import {
+    ITimelineControllerProps
+} from './TimelineController.types'
 import './TimelineController.css';
 
-const TimelineController = () => {
+const TimelineController = (props: ITimelineControllerProps) => {
+    const {
+        active
+    } = props;
+
     const [debounceItems, { addPoint: addDebouncePoint }] = useTimeline<TimelineItem<DebounceTimelinePointType>>();
     const [throttleItems, { addPoint: addThrottlePoint }] = useTimeline<TimelineItem<ThrottletimelinePointType>>();
     const setIntervalFunc = () => {
@@ -55,8 +62,7 @@ const TimelineController = () => {
     useEffect(() => {
         // setIntervalFunc();
     }, [])
-    
-    return <div className="TimelineController">
+    return <div className={ `TimelineController ${ active ? 'opened' : 'closed' }` }>
         <div className="timeline-panel">
             <Timeline className="debounce "items={debounceItems}/>
             <div className="divider horizontal"/>

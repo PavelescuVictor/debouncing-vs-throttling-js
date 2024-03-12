@@ -4,36 +4,19 @@ export enum AdvanceSections {
 }
 
 export enum DebounceSettings {
-    DEBOUNCE_TIME = 'debounce-time',
-    MAX_WAIT_TIME = 'max-wait-time',
-    MAX_WAIT_CALLS = 'max-wait-calls',
+    DEBOUNCE_TIME = 'debounceTime',
+    MAX_WAIT_TIME = 'maxWaitTime',
+    MAX_WAIT_CALLS = 'maxWaitCalls',
     LEADING = 'leading',
     TRAILING = 'trailing',
 }
 
 export enum ThrottleSettings {
-    THROTTLE_TIME = 'throttle-time',
-    MAX_WAIT_TIME = 'max-wait-time',
-    MAX_WAIT_CALLS = 'max-wait-calls',
+    THROTTLE_TIME = 'throttleTime',
+    MAX_WAIT_TIME = 'maxWaitTime',
+    MAX_WAIT_CALLS = 'maxWaitCalls',
     LEADING = 'leading',
     TRAILING = 'trailing',
 }
 
 export type SettingsTypes = DebounceSettings | ThrottleSettings;
-
-export interface IAdavanceState {
-    [AdvanceSections.DEBOUNCE]: {
-        [DebounceSettings.DEBOUNCE_TIME]: number | null,
-        [DebounceSettings.MAX_WAIT_TIME]: number | null;
-        [DebounceSettings.MAX_WAIT_CALLS]: number | null;
-        [DebounceSettings.LEADING]: boolean;
-        [DebounceSettings.TRAILING]: boolean;
-    };
-    [AdvanceSections.THROTTLE]: {
-        [ThrottleSettings.THROTTLE_TIME]: number | null;
-        [ThrottleSettings.MAX_WAIT_TIME]: number | null;
-        [ThrottleSettings.MAX_WAIT_CALLS]: number | null;
-        [ThrottleSettings.LEADING]: boolean;
-        [ThrottleSettings.TRAILING]: boolean;
-    };
-}

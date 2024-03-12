@@ -1,5 +1,4 @@
 import {
-    useState,
     MouseEvent,
     ChangeEvent,
 } from 'react';
@@ -7,68 +6,69 @@ import {
     SettingsTypes,
     DebounceSettings,
     ThrottleSettings,
-    IAdavanceState,
     AdvanceSections,
 } from './AdvanceController.types';
 import {
     AdvanceDescription
 } from '@/components/DebounceThrottle/components';
+import {
+    useContext
+} from '@/providers/ContextProvider/ContextProvider';
+import {
+    AdvanceControllerContext
+} from '@/contexts';
 import './AdvanceController.css';
 
 const AdvanceController = () => {
-    const [useAdvance, setUseAdvance] = useState(false);
-
-    const [advanceState, setAdvanceState] = useState<IAdavanceState>({
-        [AdvanceSections.DEBOUNCE]: {
-            'debounce-time': 5000,
-            'max-wait-time': null,
-            'max-wait-calls': null,
-            'leading': false,
-            'trailing': false,
+    const { 
+        state: {
+            visible: useAdvance,
+            selectedSetting,
+            debounceSettings,
+            throttleSettings
         },
-        [AdvanceSections.THROTTLE]: {
-            'throttle-time': 2000,
-            'max-wait-time': null,
-            'max-wait-calls': null,
-            'leading': false,
-            'trailing': false,
-        }
-    }) 
+        setState: setAdvanceState
+    } = useContext(AdvanceControllerContext);
 
     const onAdvanceSettingChange = (sectionType: AdvanceSections, settingType: SettingsTypes) => {
         return (event: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLInputElement>) => {
-            setAdvanceState((prevState) => {
-                const newState = {
-                    ...prevState,
+            let newState = {
+                ...(sectionType === AdvanceSections.DEBOUNCE && debounceSettings),
+                ...(sectionType === AdvanceSections.THROTTLE && throttleSettings),
+            }
+            if ([
+                DebounceSettings.LEADING, 
+                DebounceSettings.TRAILING, 
+                ThrottleSettings.LEADING, 
+                ThrottleSettings.TRAILING
+            ].includes(settingType)) {
+                newState = {
+                    ...newState,
+                    [settingType]: parseInt((event.target as HTMLInputElement).value, 10)
                 }
-                if ([
-                    DebounceSettings.LEADING, 
-                    DebounceSettings.TRAILING, 
-                    ThrottleSettings.LEADING, 
-                    ThrottleSettings.TRAILING].includes(settingType)
-                ) {
-                    newState[sectionType][settingType] = parseInt((event.target as HTMLInputElement).value, 10);
-                }
-                newState[sectionType][settingType] = (event.target as HTMLInputElement).checked;
+            }
+            newState = {
+                ...newState,
+                [settingType]: (event.target as HTMLInputElement).checked
+            }
 
-                return newState;
+            setAdvanceState({
+                key: undefined,
+                ...(sectionType === AdvanceSections.DEBOUNCE && { key: 'debounceSettings'}),
+                ...(sectionType === AdvanceSections.THROTTLE && { key: 'throttleSettings'}),
+                value: newState
             })
         }
     }
 
-    const [selectedAdvancedSetting, setSelectedAdvancedSetting] = useState<{
-        sectionType: AdvanceSections | null,
-        settingType: SettingsTypes | null,
-    }>({
-        sectionType: null,
-        settingType: null,
-    });
-
     const onAdvanceSettingChoose = (sectionType: AdvanceSections, settingType: SettingsTypes) => {
         return (_event: MouseEvent<HTMLDivElement>) => {
-            setSelectedAdvancedSetting({
-                sectionType,
-                settingType,
+            setAdvanceState({
+                key: 'selectedSetting',
+                value: {
+                    sectionType,
+                    settingType
+                }
             })
         }
     }
@@ -115,9 +115,7 @@ const AdvanceController = () => {
                 </div>
             </div>
         </div>
-        <div className="advance-panel">
-            {/* <AdvanceDescription settingType={} sectionType={} description={}/> */}
-        </div>
+        { selectedSetting?.sectionType && selectedSetting.settingType && <AdvanceDescription settingType={selectedSetting?.settingType} sectionType={selectedSetting?.sectionType} description={"TEST"}/> }
     </div>
 }
 
