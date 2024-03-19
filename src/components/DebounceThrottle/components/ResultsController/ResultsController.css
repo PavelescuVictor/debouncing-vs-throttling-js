@@ -1,0 +1,85 @@
+.ResultsController {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+
+    & .header {
+        width: fit-content;
+        margin: auto;
+        padding: 0px 24px;
+        font-size: 32px;
+        line-height: 64px;
+        text-align: center;
+    }
+
+    & .row {
+        display: flex;
+        gap: 12px;
+        justify-content: space-between;
+        
+        & p {
+            flex-grow: 1;
+            flex-basis: 33%;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        & .debounce {
+            flex-grow: 1;
+            flex-basis: 33%;
+            display: flex;
+            flex-direction: column;
+
+            & p {
+                font-size: 24px;
+                text-align: center;
+            }
+
+            & .CircularTimer {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    }
+
+    & .buttons-wrapper {
+        display: flex;
+        gap: 32px;
+        margin: auto;
+        
+        & .reset-button {
+            display: inline-block;
+            height: 72px;
+            width: fit-content;
+            align-self: center;
+            padding: 12px 24px;
+            margin: 16px 0px;
+            font-size: 32px;
+            line-height: 32px;
+            transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+
+            &:hover {
+                background-color: #646cff;
+                border-radius: 16px;
+            }
+        }
+
+        & .toggle-timeline-button {
+            display: inline-block;
+            height: 72px;
+            width: fit-content;
+            align-self: center;
+            padding: 12px 24px;
+            margin: 16px 0px;
+            font-size: 32px;
+            line-height: 32px;
+            transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+
+            &:hover {
+                background-color: #646cff;
+                border-radius: 16px;
+            }
+        }
+    }
+}
