@@ -1,5 +1,7 @@
-import execa from 'execa';
-import { existsSync } from 'fs';
+":" //#;exec /usr/bin/env node --input-type=commonjs - "$@" < "$0"
+
+const execa = require('execa');
+const fs = require('fs');
 
 (async () => {
   try {
@@ -7,7 +9,7 @@ import { existsSync } from 'fs';
     console.log('Building...');
     await execa('yarn', ['run', 'build']);
     // Check if using dist or build folder
-    const folderName = existsSync('dist') ? 'dist' : 'build';
+    const folderName = fs.existsSync('dist') ? 'dist' : 'build';
     await execa('git', ['--work-tree', folderName, 'add', '--all']);
     await execa('git', ['--work-tree', folderName, 'commit', '-m', 'gh-pages']);
     console.log('Pushing to gh-pages...');
