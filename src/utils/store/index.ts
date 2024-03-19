@@ -3,7 +3,7 @@ import {
     getStoreState,
     getStoreActions,
     createSlice,
-} from './store';
+} from './Store';
 import connect from './connect';
 
 export { 
@@ -11,7 +11,7 @@ export {
     getStoreState,
     getStoreActions,
     createSlice,
-} from './store';
+} from './Store';
 export { default as connect } from './connect';
 
 export default {

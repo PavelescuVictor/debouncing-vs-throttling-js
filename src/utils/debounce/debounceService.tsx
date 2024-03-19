@@ -33,7 +33,7 @@ export const debounce = (callback: Function, debounceConfig: IDebounceConfig): F
         maxWaitCalls = Infinity,
     } = debounceConfig;
 
-    let timeoutId: number = -1;
+    let timeoutId: number | ReturnType<typeof setTimeout> = -1;
     let currentWaitAmount: number = 0;
 
     const sanitizeCurrentTimeout = () => {
@@ -70,7 +70,7 @@ export const useDebounceValue = (value: any, debounceConfig: IDebounceConfig): A
     } = debounceConfig;
     let [debouncedValue, setDebouncedValue] = useState<any>(undefined);
     let prevValue = useRef<any>(undefined);
-    let timeoutId = useRef<number>(-1);
+    let timeoutId = useRef<number | ReturnType<typeof setTimeout>>(-1);
 
     const debounce = useCallback(() => {
         if (timeoutId.current) {
@@ -101,7 +101,7 @@ export const useDebounceCallback = (callback: Function, debounceConfig: IDebounc
         trailing = false,
     } = debounceConfig;
 
-    let timeoutId = useRef<number>(-1);
+    let timeoutId = useRef<number | ReturnType<typeof setTimeout>>(-1);
     let currentSkippedAmount = useRef<number>(0);
     let lastDebouncedCall = useRef<number>(-1);
 

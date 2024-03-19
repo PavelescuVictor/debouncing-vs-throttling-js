@@ -34,12 +34,24 @@ export const createSlice = <T extends {}>(key: string, contextState: T, actions:
     })
 }
 
-export const getStoreState = <T extends {}>(): T => Object.keys(Store).reduce((currentState: T, sliceKey: string) => ({
-    ...currentState,
-    ...(Store[sliceKey].state || {})
-}), {})
+export const getStore = () => {
+    return {...Store};
+}
 
-export const getStoreActions = <T extends {}>(): ContextActions<T> => Object.keys(Store).reduce((actions: ContextActions<T>, sliceKey: string) => ({
+export const getStoreState = <T extends {}>(): T => Object
+.keys(Store)
+.map((sliceKey: string) => ({...(Store[sliceKey].state as T || {} as T)}))
+.reduce((currentState: T, sliceState: T) => ({
+    ...currentState,
+    ...(sliceState || {})
+}), {} as T)
+
+export const getStoreActions = <T extends {}>(): ContextActions<T> => Object
+.keys(Store)
+.map((sliceKey: string) => ({...(Store[sliceKey].actions as ContextActions<T> || {} as ContextActions<T>)}))
+.reduce((actions: ContextActions<T>, sliceActions: ContextActions<T>) => ({
     ...actions,
-    ...(Store[sliceKey].actions || {})
-}), {})
+    ...(sliceActions || {})
+}), {} as ContextActions<T>)
+
+export default getStore();
