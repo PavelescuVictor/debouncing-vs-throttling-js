@@ -1,22 +1,20 @@
-":" //#;exec /usr/bin/env node --input-type=commonjs - "$@" < "$0"
-
-const execa = require('execa');
+const exec = require('child_process');
 const fs = require('fs');
 
 (async () => {
   try {
-    await execa('git', ['checkout', '--orphan', 'gh-pages']);
+    await exec('git', ['checkout', '--orphan', 'gh-pages']);
     console.log('Building...');
-    await execa('yarn', ['run', 'build']);
+    await exec('yarn', ['run', 'build']);
     // Check if using dist or build folder
     const folderName = fs.existsSync('dist') ? 'dist' : 'build';
-    await execa('git', ['--work-tree', folderName, 'add', '--all']);
-    await execa('git', ['--work-tree', folderName, 'commit', '-m', 'gh-pages']);
+    await exec('git', ['--work-tree', folderName, 'add', '--all']);
+    await exec('git', ['--work-tree', folderName, 'commit', '-m', 'gh-pages']);
     console.log('Pushing to gh-pages...');
-    await execa('git', ['push', 'origin', 'HEAD:gh-pages', '--force']);
-    await execa('rm', ['-r', folderName]);
-    await execa('git', ['checkout', '-f', 'master']);
-    await execa('git', ['branch', '-D', 'gh-pages']);
+    await exec('git', ['push', 'origin', 'HEAD:gh-pages', '--force']);
+    await exec('rm', ['-r', folderName]);
+    await exec('git', ['checkout', '-f', 'master']);
+    await exec('git', ['branch', '-D', 'gh-pages']);
     console.log('Successfully deployed');
   } catch (e) {
     console.log(e.message);
