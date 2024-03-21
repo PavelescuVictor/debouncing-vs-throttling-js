@@ -2,22 +2,22 @@ import {
     Store,
     getStoreState,
     getStoreActions,
-    createSlice,
+    subscribeStoreSlice,
 } from './Store';
-import connect from './connect';
+import connect from './helpers/connect';
 
 export { 
     Store,
     getStoreState,
     getStoreActions,
-    createSlice,
+    subscribeStoreSlice,
 } from './Store';
-export { default as connect } from './connect';
+export { default as connect } from './helpers/connect';
 
 export default {
     Store,
     getStoreState,
     getStoreActions,
-    createSlice,
+    subscribeStoreSlice,
     connect,
 }

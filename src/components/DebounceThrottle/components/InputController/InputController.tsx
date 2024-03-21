@@ -3,15 +3,13 @@ import {
     ChangeEvent,
     MouseEvent,
 } from 'react';
-import {
-    AdvanceControllerContext,
-    DebounceControllerContext,
-    ThrottleControllerContext,
-    ResultsControllerContext,
-} from '@/contexts';
+import { AdvanceControllerContext } from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
+import { DebounceControllerContext } from '@/storeSlices/DebounceControllerSlice/DebounceControllerSlice';
+import { ThrottleControllerContext } from '@/storeSlices/ThrottleControllerSlice/ThrottleControllerSlice';
+import { ResultsControllerContext } from '@/storeSlices/ResultsControllerSlice/ResultsControllerSlice';
 import {
     useContext
-} from '@/providers/ContextProvider/ContextProvider';
+} from '@/utils/store/helpers/useContext';
 import { 
     debounceService, 
     throttleService,

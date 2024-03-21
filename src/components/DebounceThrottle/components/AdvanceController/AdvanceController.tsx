@@ -13,10 +13,8 @@ import {
 } from '@/components/DebounceThrottle/components';
 import {
     useContext
-} from '@/providers/ContextProvider/ContextProvider';
-import {
-    AdvanceControllerContext
-} from '@/contexts';
+} from '@/utils/store/helpers/useContext';
+import { AdvanceControllerContext } from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
 import './AdvanceController.css';
 
 const AdvanceController = () => {
@@ -73,7 +71,11 @@ const AdvanceController = () => {
         }
     }
 
-    return <div className={ `AdvanceController ${ useAdvance ? 'opened' : 'closed' }` }>
+    const onMouseOver = (event: MouseEvent<HTMLDivElement>) => {
+        // TODO
+    }
+
+    return <div className={ `AdvanceController ${ useAdvance ? 'opened' : 'closed' }` } onMouseOver={onMouseOver}>
         <div className="advance-panel">
             <div className="section debounce">
                 <div className="header"> Debounce </div>

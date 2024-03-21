@@ -1,91 +1,54 @@
+import {
+    Provider
+} from 'react';
 import "./App.css";
-import { 
-    DebounceThrottle,
-} from './components';
+import { DebounceThrottle } from './components';
 import {
-    ContextProvider,
-} from './providers'
+    advanceControllerSlice,
+    AdvanceControllerProvider
+} from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
 import {
-    key as AdvanceControllerKey,
-    initialContextState as advanceInitialContextState,
-    actions as advanceActions,
-} from './contexts/AdvanceControllerContext/AdvanceControllerContext';
+    ISliceType as IAdvanceSliceType,
+    IInitialState as IAdvanceInitialState,
+} from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice.types';
 import {
-    IInitialContextState as IInitialAdvanceContextState
-} from './contexts/AdvanceControllerContext/AdvanceControllerContext.types';
+    debounceControllerSlice,
+    DebounceControllerProvider
+} from '@/storeSlices/DebounceControllerSlice/DebounceControllerSlice';
 import {
-    key as DebounceControllerKey,
-    initialContextState as debounceInitialContextState,
-    actions as debounceActions,
-} from './contexts/DebounceControllerContext/DebounceControllerContext';
+    ISliceType as IDebounceSliceType,
+    IInitialState as IDebounceInitialState,
+} from '@/storeSlices/DebounceControllerSlice/DebounceControllerSlice.types';
 import {
-    IInitialContextState as IInitialDebounceContextState
-} from './contexts/DebounceControllerContext/DebounceControllerContext.types';
+    throttleControllerSlice,
+    ThrottleControllerProvider
+} from '@/storeSlices/ThrottleControllerSlice/ThrottleControllerSlice';
 import {
-    key as ThrottleControllerKey,
-    initialContextState as throttleInitialContextState,
-    actions as throttleActions,
-} from './contexts/ThrottleControllerContext/ThrottleControllerContext';
+    ISliceType as IThrottleSliceType,
+    IInitialState as IThrottleInitialState,
+} from '@/storeSlices/ThrottleControllerSlice/ThrottleControllerSlice.types';
 import {
-    IInitialContextState as IInitialThrottleContextState
-} from './contexts/ThrottleControllerContext/ThrottleControllerContext.types';
+    resultsControllerSlice,
+    ResultsControllerProvider
+} from '@/storeSlices/ResultsControllerSlice/ResultsControllerSlice';
 import {
-    key as ResultsControllerKey,
-    initialContextState as resultsInitialContextState,
-    actions as resultsActions,
-} from './contexts/ResultsControllerContext/ResultsControllerContext';
-import {
-    IInitialContextState as IInitialResultsContextState
-} from './contexts/ResultsControllerContext/ResultsControllerContext.types';
-import {
-    AdvanceControllerContext,
-    DebounceControllerContext,
-    ThrottleControllerContext,
-    ResultsControllerContext,
-} from '@/contexts';
-import ProviderCumulator from './providers/ProviderCumulator';
-import { ProviderItems } from './providers/ProviderCumulator/ProviderCumulator';
+    ISliceType as IResultsSliceType,
+    IInitialState as IResultsInitialState,
+} from '@/storeSlices/ResultsControllerSlice/ResultsControllerSlice.types';
+import providerCreator from '@/storeSlices/providerCreator';
+import ProviderCumulator from '@/utils/store/components/ProviderCumulator';
 
-const AdvanceProvider = ContextProvider<IInitialAdvanceContextState>;
-const DebounceProvider = ContextProvider<IInitialDebounceContextState>;
-const ThrottleProvider = ContextProvider<IInitialThrottleContextState>;
-const ResultsProvider = ContextProvider<IInitialResultsContextState>;
-
-const providers: ProviderItems<IInitialAdvanceContextState | IInitialDebounceContextState | IInitialThrottleContextState | IInitialResultsContextState> = [
-    {
-        key: AdvanceControllerKey,
-        provider: AdvanceProvider,
-        initialState: advanceInitialContextState,
-        actions: advanceActions,
-        specificProvider: AdvanceControllerContext.Provider,
-    },
-    { 
-        key: DebounceControllerKey,
-        provider: DebounceProvider,
-        initialState: debounceInitialContextState,
-        actions: debounceActions,
-        specificProvider: DebounceControllerContext.Provider,
-    },
-    {
-        key: ThrottleControllerKey,
-        provider: ThrottleProvider,
-        initialState: throttleInitialContextState,
-        actions: throttleActions,
-        specificProvider: ThrottleControllerContext.Provider,
-    },
-    {
-        key: ResultsControllerKey,
-        provider: ResultsProvider,
-        initialState: resultsInitialContextState,
-        actions: resultsActions,
-        specificProvider: ResultsControllerContext.Provider,
-    }
+const AdvanceProvider = providerCreator<IAdvanceSliceType, Provider<IAdvanceInitialState>>(advanceControllerSlice, AdvanceControllerProvider);
+const DebounceProvider = providerCreator<IDebounceSliceType, Provider<IDebounceInitialState>>(debounceControllerSlice, DebounceControllerProvider);
+const ThrottleProvider = providerCreator<IThrottleSliceType, Provider<IThrottleInitialState>>(throttleControllerSlice, ThrottleControllerProvider);
+const ResultsProvider = providerCreator<IResultsSliceType, Provider<IResultsInitialState>>(resultsControllerSlice, ResultsControllerProvider);
+const providers: any = [
+    AdvanceProvider,
+    DebounceProvider,
+    ThrottleProvider,
+    ResultsProvider
 ]
-
 const MainProvider = ProviderCumulator(providers);
-
-// const providers = [];
-// const MainProvider = ProviderMerger(providers);
 
 const App = () => {
     return <div className="App">

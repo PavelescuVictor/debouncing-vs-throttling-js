@@ -10,14 +10,12 @@ import {
     ResultsController,
     TimelineController,
 } from './components';
-import {
-    AdvanceControllerContext,
-    DebounceControllerContext,
-    ThrottleControllerContext,
-} from '@/contexts';
+import { AdvanceControllerContext } from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
+import { DebounceControllerContext } from '@/storeSlices/DebounceControllerSlice/DebounceControllerSlice';
+import { ThrottleControllerContext } from '@/storeSlices/ThrottleControllerSlice/ThrottleControllerSlice';
 import {
     useContext
-} from '@/providers/ContextProvider/ContextProvider';
+} from '@/utils/store/helpers/useContext';
 import './DebounceThrottle.css';
 
 /**
@@ -39,6 +37,8 @@ const DebounceThrottle = () => {
         },
     } = useContext(AdvanceControllerContext);
 
+    console.log(useContext(AdvanceControllerContext));
+
     // Debounce toggle
     const {
         state: {
@@ -46,6 +46,7 @@ const DebounceThrottle = () => {
         },
         setState: setUseDebounce,
     } = useContext(DebounceControllerContext);
+    console.log(useContext(DebounceControllerContext));
     const onDebounceCheckboxChange = (_event: ChangeEvent<HTMLInputElement>) => {
         setUseDebounce({
             key: 'active',
@@ -60,6 +61,7 @@ const DebounceThrottle = () => {
         },
         setState: setUseThrottle
     } = useContext(ThrottleControllerContext);
+    console.log(useContext(ThrottleControllerContext));
     const onThrottleCheckboxChange = (_event: ChangeEvent<HTMLInputElement>) => {
         setUseThrottle({
             key: 'active',

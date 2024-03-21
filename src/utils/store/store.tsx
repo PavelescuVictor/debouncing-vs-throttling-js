@@ -1,36 +1,24 @@
-export type ActionReturnType = void;
-export type Action = (currentState: any, actions: IContextActions) => ActionReturnType;
-export interface IContextActions {
-    [key: string]: Action
+import { 
+    StoreType,
+    ISlice,
+} from './Store.types';
+
+import {
+    StoreSlicesType
+} from '@/storeSlices/storeSlices.types';
+
+const createStore = () => {
+    return {} as StoreType<StoreSlicesType>;
 }
 
-type ContextAction<T> = (currentState: T, actions: IContextActions, ...rest: any) => void
+export const Store = createStore()
 
-interface ContextActions<T> {
-    [key: string]: ContextAction<T>
-}
-
-interface Slice<T> {
-    state: T
-    actions: IContextActions
-}
-
-interface Store {
-    [key: string]: Slice<unknown>;
-}
-
-export const Store: Store = {};
-
-export const createSlice = <T extends {}>(key: string, contextState: T, actions: ContextActions<T>) => {
-    if (Object.keys(Store).includes(key)) {
+export const subscribeStoreSlice = <T extends {}, K extends {}>(slice: ISlice<T, K>) => {
+    if (Object.keys(Store).includes(slice.key)) {
         return;
     }
-    const slice: Slice<T> = {
-        state: contextState,
-        actions,
-    }
     Object.assign(Store, {
-        [key]: slice,
+        [slice.key]: slice,
     })
 }
 
