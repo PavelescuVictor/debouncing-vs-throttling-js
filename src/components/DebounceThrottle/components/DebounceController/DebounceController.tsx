@@ -6,10 +6,9 @@ const useDebounceCallback = debounceService.useDebounceCallback;
 
 const DebounceController = () => {
 
-    const handleOnDebounceChange = (debounceCallsAmount: number) => {
-        setDebounceCallsAmount(debounceCallsAmount + 1);
+    const handleOnDebounceChange = (_debounceCallsAmount: number) => {
     };
-    const [debounceHandleOnChange] = useDebounceCallback(handleOnDebounceChange, { debounceTime: 5000 });
+    const [_debounceHandleOnChange] = useDebounceCallback(handleOnDebounceChange, { debounceTime: 5000 });
     
     return <div className="DebounceController"></div>
 }

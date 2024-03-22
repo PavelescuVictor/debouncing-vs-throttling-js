@@ -71,7 +71,7 @@ const AdvanceController = () => {
         }
     }
 
-    const onMouseOver = (event: MouseEvent<HTMLDivElement>) => {
+    const onMouseOver = (_event: MouseEvent<HTMLDivElement>) => {
         // TODO
     }
 

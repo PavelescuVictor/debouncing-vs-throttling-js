@@ -8,10 +8,12 @@ export interface ISlice<T, K> {
 }
 
 type ActionReturnType = void;
+    //@ts-ignore
 export type ActionType = (currentState: IStoreState, actions: IStoreActions, ...rest: any[]) => ActionReturnType;
 
 interface Slice<T> {
     state: T
+        //@ts-ignore
     actions: IStoreActions
 }
 

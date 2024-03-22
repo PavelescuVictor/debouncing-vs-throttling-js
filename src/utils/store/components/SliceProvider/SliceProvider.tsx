@@ -44,6 +44,7 @@ type ISliceProviderProps = {
     children: ReactNode
 }
 
+//@ts-ignore
 const SliceProvider = <T extends unknown>(props: ISliceProviderProps<T>) => {
     const {
         slice,
@@ -73,13 +74,16 @@ const SliceProvider = <T extends unknown>(props: ISliceProviderProps<T>) => {
         }
         const prevValue = state[key];
         setInnerState(prevState => ({
+            //@ts-ignore
             ...prevState,
             [key]: value as typeof prevValue,
         }));
         return;
     }, [state])
     const contextActions = {};
+    //@ts-ignore
     const storeState = getStoreState<T>();
+        //@ts-ignore
     const storeActions = getStoreActions<T>();
     Object.keys(sliceActions).forEach((actionName: string) => {
         const contextAction = (...args: any) => { 
@@ -122,12 +126,14 @@ export const createContextProvider = <T extends unknown>(props: IUseContextProvi
         }
         const prevValue = state[key];
         setInnerState(prevState => ({
+            //@ts-ignore
             ...prevState,
             [key]: value as typeof prevValue,
         }));
         return;
     }, [state])
     const contextActions = {};
+        //@ts-ignore
     const storeState = getStoreState<T>();
     const storeActions = getStoreActions();
     Object.keys(actions).forEach((actionName: string) => {

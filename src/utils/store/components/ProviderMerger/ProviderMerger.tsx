@@ -1,10 +1,10 @@
 import {
     createContext,
-    ReactNode,
+    // ReactNode,
 } from 'react';
-import {
-    createContextProvider,
-} from '@/utils/store/components/SliceProvider/SliceProvider';
+// import {
+//     createContextProvider,
+// } from '@/utils/store/components/SliceProvider/SliceProvider';
 
 export type ActionReturnType = void;
 export type ContextAction<T> = (currentState: any, actions: IContextActions<T>) => ActionReturnType;
@@ -25,9 +25,9 @@ export type ProviderItems<T> = CustomProvider<T>[];
 
 type ChildrenType = string | JSX.Element | JSX.Element[] | (() => JSX.Element)
 
-interface MergerProps {
-    children: ChildrenType
-}
+// interface MergerProps {
+//     children: ChildrenType
+// }
 
 interface SetContextStateProps<T> {
     key: keyof T | null | undefined
@@ -50,13 +50,14 @@ const contextInitialState = {
 
 export const Context = createContext<ContextSlice<unknown>>(contextInitialState);
 
-const ProviderMerger = <T extends {}>(providers: ProviderItems<T>) => providers.forEach((SliceProvider: any) => {
-    const [value] = createContextProvider<T>({ initialState, actions });
-    return ({ children }: { children: ReactNode}) => {
-        return <Context.Provider value={value}>
-            { children }
-        </Context.Provider>
-    }
+const ProviderMerger = <T extends {}>(providers: ProviderItems<T>) => providers.forEach((_SliceProvider: any) => {
+    // const [value] = createContextProvider<T>({ initialState:, contextInitialState.actions });
+    // return ({ children }: { children: ReactNode}) => {
+    //     return <Context.Provider value={value as any}>
+    //         { children }
+    //     </Context.Provider>
+    // }
+    return null;
 });
 
 export default ProviderMerger;
