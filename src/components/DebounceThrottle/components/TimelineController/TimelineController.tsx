@@ -20,6 +20,7 @@ const TimelineController = (props: ITimelineControllerProps) => {
 
     const [debounceItems, { addPoint: addDebouncePoint }] = useTimeline<TimelineItem<DebounceTimelinePointType>>();
     const [throttleItems, { addPoint: addThrottlePoint }] = useTimeline<TimelineItem<ThrottletimelinePointType>>();
+    //@ts-ignore
     const setIntervalFunc = () => {
         setInterval(() => {
             const valuesDebounce = [

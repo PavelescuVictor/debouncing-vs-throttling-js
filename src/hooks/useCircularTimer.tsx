@@ -28,7 +28,7 @@ const useCircularTimer = (props: UseCircularTimerProps): [number, number, Return
     } = props;
 
     const [shouldStart, setShouldStart] = useState(false);
-    const nextTickId = useRef(-1);
+    const nextTickId = useRef<number | ReturnType<typeof setTimeout>>(-1);
     const [timeElapsed, setTimeElapsed] = useState(0);
     const [remainingTime, setRemainingTime] = useState(totalTime / 1000);
     const [reset, setReset] = useState(false);

@@ -2,9 +2,11 @@ import { ChangeEvent, useState } from 'react';
 import './DebouncedValue.css';
 import { useDebounceValue } from '../../utils/debounce/debounceService';
 
+const DEFAULT_DEBOUNCE_TIME = 5000;
+
 const DebouncedValue = () => {
     const [value, setValue] = useState('');
-    const [debouncedValue] = useDebounceValue(value, 5000);
+    const [debouncedValue] = useDebounceValue(value, { debounceTime: DEFAULT_DEBOUNCE_TIME });
     
     const onChangeCallback = (event: ChangeEvent<HTMLInputElement>) => {
         console.log("On Change Call");
