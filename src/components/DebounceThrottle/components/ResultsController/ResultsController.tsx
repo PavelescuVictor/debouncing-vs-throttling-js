@@ -5,10 +5,8 @@ import {
 import { IResultsControllerProps } from './ResultsController.types';
 import {
     useContext
-} from '@/providers/ContextProvider/ContextProvider';
-import {
-    ResultsControllerContext,
-} from '@/contexts';
+} from '@/utils/store/helpers/useContext';
+import { ResultsControllerContext } from '@/storeSlices/ResultsControllerSlice/ResultsControllerSlice';
 import CircularTimer from '../CircularTimer';
 import './ResultsController.css';
 

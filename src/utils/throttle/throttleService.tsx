@@ -8,20 +8,20 @@ interface IThrottleConfig {
     trailing?: boolean,
 }
 
-export const throttle = () => {
-
-}
-
 export const useThrottleCallback = (callback: Function, throttleConfig: IThrottleConfig) => {
     const {
         throttleTime = 5000,
+        //@ts-ignore
         maxWaitTime = 1000,
+        //@ts-ignore
         maxWaitCalls = Infinity,
+        //@ts-ignore
         leading = false,
+        //@ts-ignore
         trailing = false,
     } = throttleConfig;
 
-    const timeoutId = useRef<number>(-1);
+    const timeoutId = useRef<number | ReturnType<typeof setTimeout>>(-1);
     const shouldWait = useRef<boolean>(false);
     const callbackArgs = useRef<Array<any> | null>();
 
@@ -51,5 +51,5 @@ export const useThrottleCallback = (callback: Function, throttleConfig: IThrottl
 }
 
 export default {
-    throttle,
+    useThrottleCallback,
 }
