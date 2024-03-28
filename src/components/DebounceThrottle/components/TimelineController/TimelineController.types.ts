@@ -1,3 +1,1 @@
-export interface ITimelineControllerProps {
-    active: boolean,
-}
+export interface ITimelineControllerProps {}

@@ -21,3 +21,27 @@ export const advanceSettingToDescription = {
         [ThrottleSettings.TRAILING]:  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque quam provident itaque odit veniam, placeat cum aut iusto natus labore?',
     },
 }
+
+export const TOOLTIP_UPDATE_DELAY =  4000;
+
+export const INITIAL_STYLES = {
+    overflow: 'hidden',
+    width: '100%',
+    maxHeight: '0px',
+}
+
+export const MOUNT_TRANSITION = {
+    duration: 500,
+    transitionStyles: {
+        maxHeight: '1012px',
+        transition: 'max-height 0.5s ease-in 0.1s',
+    }
+}
+
+export const UNMOUNT_TRANSITION = {
+    duration: 500,
+    transitionStyles: {
+        maxHeight: '0px',
+        transition: 'max-height 0.5s ease-out 0s',
+    }
+}

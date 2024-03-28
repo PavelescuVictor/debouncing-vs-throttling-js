@@ -1,0 +1,46 @@
+.AdvanceDescription {
+    & .tooltip {
+        text-align: center;
+        font-size: 32px;
+        padding: 48px 0px;
+        width: 100%;
+    }
+
+    & .description-wrapper{
+        display: flex;
+        flex-direction: column;
+
+        & .header {
+            font-size: 48px;
+            text-align: center;
+            text-transform: capitalize;
+            font-weight: bold;
+        }
+    
+        & .content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+    
+            & .setting {
+                text-align: center;
+                font-size: 36px;
+                color:  #88ff64;
+            }
+            
+            & .divider {
+                width: 100%;
+                height: 6px;
+                background: buttonface;
+                border-radius: 32px;
+            }
+    
+            & .description {
+                font-size: 32px;
+                word-wrap: break-word;
+                margin: auto;
+                text-align: center;
+            }
+        }
+    }
+}

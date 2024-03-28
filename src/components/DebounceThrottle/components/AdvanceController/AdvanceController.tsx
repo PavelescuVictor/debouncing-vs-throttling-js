@@ -1,7 +1,24 @@
 import {
     MouseEvent,
     ChangeEvent,
+    useState,
+    useRef,
+    useEffect,
 } from 'react';
+import { TransitionItem } from '@/utils/transition';
+import {
+    useContextValues,
+    useContextSetValues,
+} from '@/utils/store/helpers/useContext';
+import { AdvanceControllerContext } from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
+import { DebounceControllerContext } from '@/storeSlices/DebounceControllerSlice/DebounceControllerSlice';
+import { ThrottleControllerContext } from '@/storeSlices/ThrottleControllerSlice/ThrottleControllerSlice';
+import {
+    AdvanceDescription,
+    DebounceSettings as DebounceSection,
+    ThrottleSettings as ThrottleSection,
+} from './components';
+import { Panel } from '@/components/DebounceThrottle/components';
 import {
     SettingsTypes,
     DebounceSettings,
@@ -9,24 +26,24 @@ import {
     AdvanceSections,
 } from './AdvanceController.types';
 import {
-    AdvanceDescription
-} from '@/components/DebounceThrottle/components';
-import {
-    useContext
-} from '@/utils/store/helpers/useContext';
-import { AdvanceControllerContext } from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
+    INITIAL_STYLES,
+    MOUNT_TRANSITION,
+    UNMOUNT_TRANSITION,
+    TOOLTIP_UPDATE_DELAY,
+} from './constants';
 import './AdvanceController.css';
 
 const AdvanceController = () => {
     const { 
-        state: {
-            visible: useAdvance,
-            selectedSetting,
-            debounceSettings,
-            throttleSettings
-        },
-        setState: setAdvanceState
-    } = useContext(AdvanceControllerContext);
+        visible: useAdvance,
+        selectedSetting,
+        debounceSettings,
+        throttleSettings,
+    } = useContextValues(AdvanceControllerContext);
+    
+    const setAdvanceState = useContextSetValues(AdvanceControllerContext);
+    const { active: useDebounce } = useContextValues(DebounceControllerContext);
+    const { active: useThrottle} = useContextValues(ThrottleControllerContext);
 
     const onAdvanceSettingChange = (sectionType: AdvanceSections, settingType: SettingsTypes) => {
         return (event: ChangeEvent<HTMLInputElement> | MouseEvent<HTMLInputElement>) => {
@@ -49,7 +66,6 @@ const AdvanceController = () => {
                 ...newState,
                 [settingType]: (event.target as HTMLInputElement).checked
             }
-
             setAdvanceState({
                 key: undefined,
                 ...(sectionType === AdvanceSections.DEBOUNCE && { key: 'debounceSettings'}),
@@ -61,63 +77,105 @@ const AdvanceController = () => {
 
     const onAdvanceSettingChoose = (sectionType: AdvanceSections, settingType: SettingsTypes) => {
         return (_event: MouseEvent<HTMLDivElement>) => {
+            const isSelected = selectedSetting && selectedSetting.sectionType === sectionType && selectedSetting.settingType === settingType;
             setAdvanceState({
                 key: 'selectedSetting',
-                value: {
+                value: isSelected ? null : {
                     sectionType,
-                    settingType
+                    settingType,
                 }
             })
         }
     }
 
+    const [showTooltip, setShowTooltip] = useState(false);
+    const updateTooltipId = useRef<ReturnType<typeof setTimeout> | number>(-1);
+    const isHovering = useRef(false);
     const onMouseOver = (_event: MouseEvent<HTMLDivElement>) => {
-        // TODO
+        isHovering.current = true;
+        setShowTooltip(true);
+        clearTimeout(updateTooltipId.current);
+        updateTooltipId.current = setTimeout(() => {
+            updateTooltipId.current = -1;
+            if (isHovering.current === true) {
+                return;
+            }
+            setShowTooltip(false);
+        }, TOOLTIP_UPDATE_DELAY)
     }
 
-    return <div className={ `AdvanceController ${ useAdvance ? 'opened' : 'closed' }` } onMouseOver={onMouseOver}>
-        <div className="advance-panel">
-            <div className="section debounce">
-                <div className="header"> Debounce </div>
-                <div className="content">
-                    <div className="names">
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.DEBOUNCE, DebounceSettings.DEBOUNCE_TIME) }> Debounce Time </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.DEBOUNCE, DebounceSettings.MAX_WAIT_TIME) }> Max Wait Time </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.DEBOUNCE, DebounceSettings.MAX_WAIT_CALLS) }> Max Wait Calls </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.DEBOUNCE, DebounceSettings.LEADING) }> Leading </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.DEBOUNCE, DebounceSettings.TRAILING) }> Trailing </div>
-                    </div>
-                    <div className="settings">
-                        <input type="number" name="debounce-time" className="setting debounce-time" placeholder="Time in miliseconds (ms)" defaultValue={3000} onChange={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.DEBOUNCE_TIME)}/>
-                        <input type="number" name="max-wait-time" className="setting max-wait-time" placeholder="Maximum waiting time (ms)" defaultValue={1000} onChange={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.MAX_WAIT_TIME)}/>
-                        <input type="number" name="max-wait-calls" className="setting max-wait-calls" placeholder="Maximum number of calls skipped" defaultValue={5} onChange={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.MAX_WAIT_CALLS)}/>
-                        <input type="checkbox" name="leading" className="setting leading" defaultValue={0} onClick={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.LEADING)}/>
-                        <input type="checkbox" name="trailing" className="setting trailing" defaultValue={0} onClick={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.TRAILING)}/>
-                    </div>
-                </div>
-            </div>
-            <div className="divider vertical"/>
-            <div className="section throttle">
-                <div className="header"> Throttle </div>
-                <div className="content">
-                    <div className="settings">
-                        <input type="number" className="setting throttle-time" placeholder="Time in miliseconds (ms)" defaultValue={3000} onChange={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.DEBOUNCE_TIME)}/>
-                        <input type="number" className="setting max-wait-time" placeholder="Maximum waiting time (ms)" defaultValue={1000} onChange={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.MAX_WAIT_TIME)}/>
-                        <input type="number" className="setting max-wait-calls" placeholder="Maximum number of calls skipped" defaultValue={5} onChange={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.MAX_WAIT_CALLS)}/>
-                        <input type="checkbox" className="setting leading" defaultValue={0} onClick={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.LEADING)}/>
-                        <input type="checkbox" className="setting trailing" defaultValue={0} onClick={onAdvanceSettingChange(AdvanceSections.DEBOUNCE, DebounceSettings.TRAILING)}/>
-                    </div>
-                    <div className="names">
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.THROTTLE, ThrottleSettings.THROTTLE_TIME) }> Throtling Time </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.THROTTLE, ThrottleSettings.MAX_WAIT_TIME) }> Max Wait Time </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.THROTTLE, ThrottleSettings.MAX_WAIT_TIME) }> Max Wait Calls </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.THROTTLE, ThrottleSettings.LEADING) }> Leading </div>
-                        <div className="name" onClick={ onAdvanceSettingChoose(AdvanceSections.THROTTLE, ThrottleSettings.TRAILING) }> Trailing </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        { selectedSetting?.sectionType && selectedSetting.settingType && <AdvanceDescription settingType={selectedSetting?.settingType} sectionType={selectedSetting?.sectionType} description={"TEST"}/> }
+    const onMouseOut = (_event: MouseEvent<HTMLDivElement>) => {
+        isHovering.current = false;
+        if (updateTooltipId.current === -1) {
+            updateTooltipId.current = setTimeout(() => {
+                updateTooltipId.current = -1;
+                setShowTooltip(false);
+            }, TOOLTIP_UPDATE_DELAY)
+        }
+    }
+
+    const handleCloseAdvanceController = () => {
+        setAdvanceState({
+            key: 'visible',
+            value: false,
+        })
+    }
+
+    const handleCloseDescription = () => {
+        setAdvanceState({
+            key: 'selectedSetting',
+            value: null,
+        });
+        setShowTooltip(false);
+    }
+
+    const handleCloseTooltip = () => {
+        clearTimeout(updateTooltipId.current);
+        setShowTooltip(false);
+    }
+
+    useEffect(() => {
+        setShowTooltip(false);
+    }, [selectedSetting])
+
+    return <div className="AdvanceController">
+        <TransitionItem
+            mounted={useAdvance}
+            shouldTransitionOnMount
+            shouldTransitionOnUnmount
+            mountTransition={MOUNT_TRANSITION}
+            unmountTransition={UNMOUNT_TRANSITION}
+            initialStyles={INITIAL_STYLES}
+        >
+            <Panel withCloseButton closeButtonAction={handleCloseAdvanceController}>
+                <DebounceSection 
+                    isActive={useDebounce}
+                    settings={debounceSettings}
+                    selectedSetting={selectedSetting}
+                    onMouseOver={onMouseOver}
+                    onMouseOut={onMouseOut}
+                    onChoose={onAdvanceSettingChoose}
+                    onChange={onAdvanceSettingChange}
+                />
+                <div className="divider vertical"/>
+                <ThrottleSection
+                    isActive={useThrottle}
+                    settings={throttleSettings}
+                    selectedSetting={selectedSetting}
+                    onMouseOver={onMouseOver}
+                    onMouseOut={onMouseOut}
+                    onChoose={onAdvanceSettingChoose}
+                    onChange={onAdvanceSettingChange}
+                />
+            </Panel>
+            <AdvanceDescription 
+                showTooltip={ showTooltip && !selectedSetting && (useDebounce || useThrottle) } 
+                settingType={ selectedSetting?.settingType } 
+                sectionType={ selectedSetting?.sectionType }
+                handleCloseDescription={ handleCloseDescription }
+                handleCloseTooltip={ handleCloseTooltip }
+            />
+        </TransitionItem>
     </div>
 }
 

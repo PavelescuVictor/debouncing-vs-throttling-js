@@ -1,0 +1,153 @@
+
+.Timeline {
+    width: 100%;
+
+    &.no-items {
+        position: relative;
+        padding: 96px 0px;
+
+        & .message {
+            font-size: 36px;
+            text-align: center;
+            margin: auto;
+        }
+
+        & .call-pulse {
+            position: absolute;
+            top: 50%;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            opacity: 1;
+            background-color: #ff6464;
+            border-radius: 50%;
+
+            &:first-child {
+                left: 50%;
+                transform: scale(1) translate(calc(-50% - 200px), -50%);
+                transform-origin: center;
+                animation: fading .8s ease-in-out infinite, growing-left-pulse 2s ease-in-out infinite;
+            }
+
+            &:last-child {
+                left: 50%;
+                transform: scale(1) translate(calc(-50% + 200px), -50%);
+                transform-origin: center;
+                animation: fading .8s ease-in-out infinite, growing-right-pulse 2s ease-in-out infinite;
+            }
+        }
+    }
+
+    & .viewing-area {
+        position: relative;
+
+        & .render-area {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+
+            & .items-list {
+                display: flex;
+                position: absolute;
+                left: 0;
+                top: 0;
+
+                & .transition-item {
+                    & .cell {
+                        position: relative;
+                
+                        & .type {
+                            position: absolute;
+                            top: -48px;
+                            font-size: 18px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            text-transform: uppercase;
+                        }
+                
+                        & .body {
+                            width: 100%;
+                            height: 100%;
+                            background: buttonface;
+                            border-radius: 50%;
+                        }
+
+                        &.debounce {
+                            & .body {
+                                background-color: #88ff64 ;
+                            }
+                        }
+
+                        &.throttle {
+                            & .body {
+                                background-color: #ff6464 ;
+                            }
+                        }
+                
+                        &.leading {
+                            & .body {
+                                background-color: #ff9a64 ;
+                            }
+                        }
+                
+                        &.trailing {
+                            & .body {
+                                background-color: #6964ff ;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    &.throttle {
+        & .cell {
+            & .type {
+
+            }
+
+            & .body {}
+        }
+    }
+}
+
+@keyframes fading {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes growing-left-pulse {
+    0% {
+        transform: translate(calc(-50% - 175px), -50%) scale(0);
+    }
+
+    35% {
+        transform: translate(calc(-50% - 175px), -50%) scale(1.4);
+    }
+
+    100% {
+        transform: translate(calc(-50% - 175px), -50%) scale(0);
+    }
+}
+
+@keyframes growing-right-pulse {
+    0% {
+        transform: translate(calc(-50% + 175px), -50%) scale(0);
+    }
+
+    35% {
+        transform: translate(calc(-50% + 175px), -50%) scale(1.4);
+    }
+
+    100% {
+        transform: translate(calc(-50% + 175px), -50%) scale(0);
+    }
+}

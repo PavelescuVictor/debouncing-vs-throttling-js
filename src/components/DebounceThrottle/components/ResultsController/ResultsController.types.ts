@@ -3,5 +3,4 @@ export interface IResultsControllerProps {
     useThrottle: boolean
     remainingTime: number
     resetTimer: () => void
-    toggleTimeline: (_event: any) => void;
 }

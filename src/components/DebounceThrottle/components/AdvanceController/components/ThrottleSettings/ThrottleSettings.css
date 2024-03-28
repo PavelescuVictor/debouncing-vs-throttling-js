@@ -1,0 +1,87 @@
+.ThrottleSettings {
+    width: 484px;
+    min-height: 432px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    & .transition-disabled-message,
+    & .transition-settings {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+    }
+
+    & .settings {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+
+        & .header {
+            font-size: 42px;
+            line-height: 42px;
+            text-align: center;
+        }
+    
+        & .content {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+    
+            & .names {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+    
+                & .name {
+                    flex-grow: 0;
+                    font-size: 24px;
+                    line-height: 48px;
+                    padding: 6px 0px;
+                    cursor: pointer;
+                    transition: color 0.2s ease-out, padding 0.2s ease-in-out;
+                    text-align: right;
+
+                    &.selected {
+                        color: #646cff;
+                    }
+    
+                    &:hover {
+                        color: #646cff;
+                        padding-top: 0px;
+                        padding-bottom: 12px;
+                    }
+                }
+            }
+    
+            & .settings {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                flex-grow: 1;
+    
+                & .setting {
+                    height: 60px;
+    
+                    &[type="number"] {
+                        font-size: 22px;
+                        border-radius: 12px;
+                        padding: 0px 16px;
+                        text-align: right;
+                    }
+    
+                    & .checkbox-input {
+                        width: 60px;
+                        height: 60px;
+                        margin-left: auto;
+                    }
+                }
+            }
+        }
+    }
+}

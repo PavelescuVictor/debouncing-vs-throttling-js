@@ -1,3 +1,3 @@
-import ResultsControllerContext from './ResultsControllerSlice';
+import ResultsControllerSlice from './ResultsControllerSlice';
 
-export default ResultsControllerContext;
+export default ResultsControllerSlice;

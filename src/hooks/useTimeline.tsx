@@ -9,17 +9,10 @@ const useTimeline = <T extends unknown>(props: any = {}) => {
     const [timeline, setTimeline] = useState<Array<T>>([]);
     
     const addPoint = (point: T) => {
-        console.log({
-            timeline,
-            length: timeline.length,
-            MAX_TIMELINE_POINTS,
-            point,
-        })
         if (timeline.length >= MAX_TIMELINE_POINTS) {
             const auxTimeline = [...timeline];
             auxTimeline.shift();
             auxTimeline.push(point);
-            console.log(auxTimeline);
             setTimeline(auxTimeline);
         } 
         setTimeline((prevState: T[]) => [...prevState, point]);

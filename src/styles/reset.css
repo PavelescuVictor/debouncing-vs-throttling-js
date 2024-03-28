@@ -2,4 +2,10 @@ input {
     outline: none;
     border: none;
     margin: 0;
+    padding-block: 0px;
+    padding-inline: 0px;
+}
+
+p {
+    margin: 0px;
 }

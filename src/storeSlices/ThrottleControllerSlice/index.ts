@@ -1,3 +1,3 @@
-import ThrottleControllerContext from './ThrottleControllerSlice';
+import ThrottleControllerSlice from './ThrottleControllerSlice';
 
-export default ThrottleControllerContext;
+export default ThrottleControllerSlice;

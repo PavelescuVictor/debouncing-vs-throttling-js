@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     gap: 16px;
-    margin-bottom: 32px;
+    margin: 48px 0px;
 
     & .input {
         flex-grow: 1;
@@ -21,17 +21,33 @@
     & .input-clear,
     .advance-toggle  {
         flex-grow: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
         height: 72px;
         padding: 12px 24px;
-        font-size: 32px;
-        line-height: 32px;
         border-radius: 16px;
         background-color: field;
         transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out;
 
+        & .name {
+            font-size: 32px;
+            line-height: 48px;
+        }
+
+        & .icon {
+            height: 60%;
+        }
+
+        &:hover {
+            border-radius: 32px;
+        }
+    }
+
+    & .input-clear {
         &:hover {
             background-color: #ff6464;
-            border-radius: 32px;
         }
     }
 
@@ -39,5 +55,9 @@
         flex-grow: 0;
         height: 72px;
         padding: 12px 24px;
+
+        &:hover {
+            background-color: #646cff;
+        }
     }
 }

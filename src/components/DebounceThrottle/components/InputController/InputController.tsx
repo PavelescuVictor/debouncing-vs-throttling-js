@@ -3,12 +3,24 @@ import {
     ChangeEvent,
     MouseEvent,
 } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faGear,
+    faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import { AdvanceControllerContext } from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
 import { DebounceControllerContext } from '@/storeSlices/DebounceControllerSlice/DebounceControllerSlice';
 import { ThrottleControllerContext } from '@/storeSlices/ThrottleControllerSlice/ThrottleControllerSlice';
 import { ResultsControllerContext } from '@/storeSlices/ResultsControllerSlice/ResultsControllerSlice';
+import { TimelineControllerContext } from '@/storeSlices/TimelineControllerSlice/TimelineControllerSlice'
 import {
-    useContext
+    DebounceTimelinePointType,
+    ThrottleTimelinePointType,
+    RegularTimelinePointType,
+} from '@/storeSlices/TimelineControllerSlice/TimelineControllerSlice.types';
+import {
+    useContextValues,
+    useContextSetValues,
 } from '@/utils/store/helpers/useContext';
 import { 
     debounceService, 
@@ -32,30 +44,20 @@ const InputController = (props: IInputControllerProps) => {
         startTimer,
         resetTimer,
     } = props;
-    const {
-        state: {
-            visible: useAdvance
-        },
-        setState: setAdvanceState
-    } = useContext(AdvanceControllerContext);
-    const {
-        state: {
-            active: useDebounce
-        },
-    } = useContext(DebounceControllerContext);
-    const {
-        state: {
-            active: useThrottle
-        },
-    } = useContext(ThrottleControllerContext);
-    const {
-        state: {
-            regularCallsAmount,
-            debounceCallsAmount,
-            throttleCallsAmount,
-        },
-        setState: setResultsState
-    } = useContext(ResultsControllerContext);
+
+    const { visible: useAdvance } = useContextValues(AdvanceControllerContext);
+    const setAdvanceState = useContextSetValues(AdvanceControllerContext);
+    const { active: useDebounce } = useContextValues(DebounceControllerContext);
+    const { active: useThrottle } = useContextValues(ThrottleControllerContext);
+    const { 
+        regularCallsAmount,
+        debounceCallsAmount,
+        throttleCallsAmount,
+    } = useContextValues(ResultsControllerContext);
+    const setResultsState = useContextSetValues(ResultsControllerContext);
+    const { points: timelinePoints } = useContextValues(TimelineControllerContext);
+    const setTimelineState = useContextSetValues(TimelineControllerContext);
+
     const inputRef = useRef<HTMLInputElement>();
     const setInputRef = (instance: HTMLInputElement ) => {
         if (!instance) {
@@ -69,6 +71,16 @@ const InputController = (props: IInputControllerProps) => {
             key: 'debounceCallsAmount', 
             value: debounceCallsAmount + 1 
         });
+        setTimelineState({
+            key: 'points',
+            value: [
+                ...timelinePoints,
+                {
+                    id: Math.random().toString(16).slice(2),
+                    type: DebounceTimelinePointType.DEBOUNCE,
+                }
+            ]
+        })
     };
     const [debounceHandleOnChange] = useDebounceCallback(handleOnDebounceChange, { debounceTime: DEBOUNCE_TIME });
 
@@ -77,6 +89,16 @@ const InputController = (props: IInputControllerProps) => {
             key: 'throttleCallsAmount', 
             value: throttleCallsAmount + 1 
         });
+        setTimelineState({
+            key: 'points',
+            value: [
+                ...timelinePoints,
+                {
+                    id: Math.random().toString(16).slice(2),
+                    type: ThrottleTimelinePointType.THROTTLE,
+                }
+            ]
+        })
     };
     const [throttleHandleOnChange] = useThrottleCallback(handleOnThrottleChange, { throttleTime: THROTTLE_TIME });
 
@@ -85,6 +107,16 @@ const InputController = (props: IInputControllerProps) => {
             key: 'regularCallsAmount', 
             value: regularCallsAmount + 1 
         });
+        setTimelineState({
+            key: 'points',
+            value: [
+                ...timelinePoints,
+                {
+                    id: Math.random().toString(16).slice(2),
+                    type: RegularTimelinePointType.REGULAR,
+                }
+            ]
+        })
 
         if (useDebounce) {
             debounceHandleOnChange(debounceCallsAmount, "Debounce Call");
@@ -118,14 +150,24 @@ const InputController = (props: IInputControllerProps) => {
                 key: 'throttleCallsAmount', 
                 value: 0,
             });
+            setTimelineState({
+                key: 'points',
+                value: []
+            })
             resetTimer();
         }
     }
 
     return <div className="InputController">
-        <button className="advance-toggle" onClick={ advanceToggle }> Settings </button>
+        <button className="advance-toggle" onClick={ advanceToggle }>
+            <FontAwesomeIcon className="icon" icon={faGear} />
+            <p className="name">Settings</p>
+        </button>
         <input className="input" name="input" id="input" type='search' placeholder='Write something here' onChange={onChangeCallback} ref={setInputRef}/>
-        <button className="input-clear" onClick={ clearHandler }> Clear </button>
+        <button className="input-clear" onClick={ clearHandler }>
+            <FontAwesomeIcon className="icon" icon={faTrash} />
+            <p className="name">Clear</p>
+        </button>
     </div>
 }
 

@@ -1,3 +1,3 @@
-import DebounceControllerContext from './DebounceControllerSlice';
+import DebounceControllerSlice from './DebounceControllerSlice';
 
-export default DebounceControllerContext;
+export default DebounceControllerSlice;

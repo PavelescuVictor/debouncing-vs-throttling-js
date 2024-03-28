@@ -1,0 +1,56 @@
+.Checkbox {
+    display: flex;
+    gap: 16px;
+
+    & .checkbox-label {
+        font-size: 36px;
+        line-height: 72px;
+        padding: 0px 16px;
+        flex-grow: 0;
+        align-self: center;
+    }
+
+    & .checkbox-input {
+        width: 72px;
+        height: 72px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & .checkmark {
+            height: 75%;
+            width: 75%;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        &.checked {
+            background-color: #6964ff;
+            border-radius: 50%;
+            transition: border-radius 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+
+        &.not-checked {
+            background-color: field;
+            transition: border-radius 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            
+            & .checkmark {
+                color: #242424;
+            }
+
+            &:hover {
+                border-radius: 50%;
+                background-color: #6964ff;
+
+                & .checkmark {
+                    transform: scale(0.8);
+                }
+            }
+        }
+    }
+}

@@ -1,12 +1,5 @@
 import { useRef } from 'react';
-
-interface IThrottleConfig {
-    throttleTime?: number,
-    maxWaitTime?: number,
-    maxWaitCalls?: number,
-    leading?: boolean,
-    trailing?: boolean,
-}
+import { IThrottleConfig } from './throttleService.types';
 
 export const useThrottleCallback = (callback: Function, throttleConfig: IThrottleConfig) => {
     const {

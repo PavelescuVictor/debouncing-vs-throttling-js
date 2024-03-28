@@ -1,0 +1,10 @@
+.Panel {
+    position: relative;
+    outline: 6px #646cff solid;
+    outline-offset: -6px;
+    border-radius: 32px;
+    padding: 48px;
+    margin: 48px 48px 0px 48px;
+    display: flex;
+    gap: 48px;
+}
