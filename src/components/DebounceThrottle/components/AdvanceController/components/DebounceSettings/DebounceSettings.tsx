@@ -108,6 +108,7 @@ const DebounceSettings = (props: IDebounceSettingsProps) => {
                             name="debounce-time" 
                             className="setting debounce-time" 
                             placeholder="Time in miliseconds (ms)" 
+                            //@ts-ignore
                             defaultValue={ settings[Settings.DEBOUNCE_TIME] } 
                             onChange={ onChange(AdvanceSections.DEBOUNCE, Settings.DEBOUNCE_TIME) }
                         />
@@ -116,6 +117,7 @@ const DebounceSettings = (props: IDebounceSettingsProps) => {
                             name="max-wait-time" 
                             className="setting max-wait-time" 
                             placeholder="Maximum waiting time (ms)" 
+                            //@ts-ignore
                             defaultValue={ settings[Settings.MAX_WAIT_TIME] } 
                             onChange={ onChange(AdvanceSections.DEBOUNCE, Settings.MAX_WAIT_TIME) }
                         />
@@ -124,18 +126,21 @@ const DebounceSettings = (props: IDebounceSettingsProps) => {
                             name="max-wait-calls" 
                             className="setting max-wait-calls" 
                             placeholder="Maximum number of calls skipped" 
+                            //@ts-ignore
                             defaultValue={ settings[Settings.MAX_WAIT_CALLS] } 
                             onChange={ onChange(AdvanceSections.DEBOUNCE, Settings.MAX_WAIT_CALLS) }
                         />
                         <Checkbox 
                             className="setting leading" 
                             name="leading" 
+                            //@ts-ignore
                             onClickCallback={ onChange(AdvanceSections.DEBOUNCE, Settings.LEADING) } 
                             labelPosition={ LabelPositon.NONE }
                         />
                         <Checkbox 
                             className="setting trailing" 
                             name="trailing" 
+                            //@ts-ignore
                             onClickCallback={ onChange(AdvanceSections.DEBOUNCE, Settings.TRAILING) } 
                             labelPosition={ LabelPositon.NONE }
                         />

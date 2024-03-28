@@ -75,6 +75,7 @@ const ThrottleSettings = (props: IThrottleSettingsProps) => {
                             type="number" 
                             className="setting throttle-time" 
                             placeholder="Time in miliseconds (ms)" 
+                            //@ts-ignore
                             defaultValue={ settings[Settings.THROTTLE_TIME] } 
                             onChange={ onChange(AdvanceSections.THROTTLE, Settings.THROTTLE_TIME) }
                         />
@@ -82,6 +83,7 @@ const ThrottleSettings = (props: IThrottleSettingsProps) => {
                             type="number" 
                             className="setting max-wait-time" 
                             placeholder="Maximum waiting time (ms)" 
+                            //@ts-ignore
                             defaultValue={ settings[Settings.MAX_WAIT_TIME] } 
                             onChange={ onChange(AdvanceSections.THROTTLE, Settings.MAX_WAIT_TIME) }
                         />
@@ -89,18 +91,21 @@ const ThrottleSettings = (props: IThrottleSettingsProps) => {
                             type="number" 
                             className="setting max-wait-calls" 
                             placeholder="Maximum number of calls skipped" 
+                            //@ts-ignore
                             defaultValue={ settings[Settings.MAX_WAIT_CALLS] } 
                             onChange={ onChange(AdvanceSections.THROTTLE, Settings.MAX_WAIT_CALLS) }
                         />
                         <Checkbox 
                             className="setting leading" 
                             name="leading" 
+                            //@ts-ignore
                             onClickCallback={ onChange(AdvanceSections.THROTTLE, Settings.LEADING) } 
                             labelPosition={ LabelPositon.NONE }
                         />
                         <Checkbox 
                             className="setting trailing" 
-                            name="trailing" 
+                            name="trailing"
+                            //@ts-ignore 
                             onClickCallback={ onChange(AdvanceSections.THROTTLE, Settings.TRAILING) } 
                             labelPosition={ LabelPositon.NONE }
                         />

@@ -12,6 +12,7 @@ import {
 import { ResultsControllerContext } from '@/storeSlices/ResultsControllerSlice/ResultsControllerSlice';
 import { TimelineControllerContext } from '@/storeSlices/TimelineControllerSlice/TimelineControllerSlice';
 import TransitionItem from '@/utils/transition/TransitionItem';
+//@ts-ignore
 import CircularTimer from '../CircularTimer';
 import {
     INITIAL_STYLES,
@@ -24,6 +25,7 @@ const ResultsController = (props: IResultsControllerProps) => {
     const {
         useDebounce = false,
         useThrottle = false,
+        //@ts-ignore
         remainingTime,
         resetTimer,
     } = props;
@@ -38,6 +40,7 @@ const ResultsController = (props: IResultsControllerProps) => {
     const { active: useTimeline} = useContextValues(TimelineControllerContext);
     const setUseTimeline = useContextSetValues(TimelineControllerContext);
 
+    //@ts-ignore
     const [showTimer, setShowTimer] = useState(true);
 
     const resetHandler = (_event: MouseEvent<HTMLButtonElement>) => {
