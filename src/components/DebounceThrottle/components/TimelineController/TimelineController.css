@@ -1,12 +1,6 @@
 .TimelineController {
     display: flex;
     flex-direction: column;
-    max-height: 1000px;
-    transition: max-height 0.4s ease-in-out, margin-bottom 0.4s ease-in-out;
-    padding: 0px 32px;
-    margin-bottom: 38px;
-    margin-top: 32px;
-    overflow: hidden;
 
     & .timeline-panel {
         outline: 6px #646cff solid;
@@ -23,11 +17,5 @@
             background: buttonface;
             border-radius: 32px;
         }
-    }
-
-    &.closed {
-        transition: max-height 0.4s ease-in-out, margin-bottom 0.4s ease-in-out 0.2s;
-        margin-bottom: 0px;
-        max-height: 0;
     }
 }

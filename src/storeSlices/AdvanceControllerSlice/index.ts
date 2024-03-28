@@ -1,3 +1,3 @@
-import AdvanceControllerContext from './AdvanceControllerSlice';
+import AdvanceControllerSlice from './AdvanceControllerSlice';
 
-export default AdvanceControllerContext;
+export default AdvanceControllerSlice;

@@ -15,16 +15,16 @@ export const initialState: IInitialState = {
     visible: false,
     selectedSetting: null,
     debounceSettings: {
-        [DebounceSettings.DEBOUNCE_TIME]: null,
-        [DebounceSettings.MAX_WAIT_TIME]: null,
-        [DebounceSettings.MAX_WAIT_CALLS]: null,
+        [DebounceSettings.DEBOUNCE_TIME]: 6000,
+        [DebounceSettings.MAX_WAIT_TIME]: 1000,
+        [DebounceSettings.MAX_WAIT_CALLS]: 5,
         [DebounceSettings.LEADING]: false,
         [DebounceSettings.TRAILING]: false,
     },
     throttleSettings: {
-        [ThrottleSettings.THROTTLE_TIME]: null,
-        [ThrottleSettings.MAX_WAIT_TIME]: null,
-        [ThrottleSettings.MAX_WAIT_CALLS]: null,
+        [ThrottleSettings.THROTTLE_TIME]: 3000,
+        [ThrottleSettings.MAX_WAIT_TIME]: 1000,
+        [ThrottleSettings.MAX_WAIT_CALLS]: 5,
         [ThrottleSettings.LEADING]: false,
         [ThrottleSettings.TRAILING]: false,
     }

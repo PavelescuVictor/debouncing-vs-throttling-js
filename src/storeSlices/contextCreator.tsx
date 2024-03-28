@@ -9,3 +9,5 @@
     
 //     return [];
 // }
+
+export default {};

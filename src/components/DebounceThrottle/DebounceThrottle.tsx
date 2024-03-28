@@ -1,7 +1,6 @@
+//@ts-nocheck
 import { 
     useState,
-    ChangeEvent,
-    MouseEvent,
 } from 'react';
 import { useCircularTimer } from '@/hooks';
 import {
@@ -9,14 +8,17 @@ import {
     InputController,
     ResultsController,
     TimelineController,
+    Checkbox,
 } from './components';
-import { AdvanceControllerContext } from '@/storeSlices/AdvanceControllerSlice/AdvanceControllerSlice';
 import { DebounceControllerContext } from '@/storeSlices/DebounceControllerSlice/DebounceControllerSlice';
 import { ThrottleControllerContext } from '@/storeSlices/ThrottleControllerSlice/ThrottleControllerSlice';
+import { TimelineControllerContext } from '@/storeSlices/TimelineControllerSlice/TimelineControllerSlice';
 import {
-    useContext
+    useContextValues,
+    useContextSetValues,
 } from '@/utils/store/helpers/useContext';
 import './DebounceThrottle.css';
+import { LabelPositon } from './components/Checkbox/Checkbox.types';
 
 /**
  * TODO: 
@@ -30,24 +32,10 @@ import './DebounceThrottle.css';
  */
 
 const DebounceThrottle = () => {
-    // Advance Panel Toggle;
-    const {
-        state: {
-            visible: useAdvance,
-        },
-    } = useContext(AdvanceControllerContext);
-
-    console.log(useContext(AdvanceControllerContext));
-
     // Debounce toggle
-    const {
-        state: {
-            active: useDebounce,
-        },
-        setState: setUseDebounce,
-    } = useContext(DebounceControllerContext);
-    console.log(useContext(DebounceControllerContext));
-    const onDebounceCheckboxChange = (_event: ChangeEvent<HTMLInputElement>) => {
+    const { active: useDebounce } = useContextValues(DebounceControllerContext);
+    const setUseDebounce = useContextSetValues(DebounceControllerContext);
+    const onDebounceCheckboxChange = (_event: React.MouseEvent<HTMLInputElement>) => {
         setUseDebounce({
             key: 'active',
             value: !useDebounce,
@@ -55,23 +43,13 @@ const DebounceThrottle = () => {
     }
 
     // Throttle toggle
-    const {
-        state: {
-            active: useThrottle,
-        },
-        setState: setUseThrottle
-    } = useContext(ThrottleControllerContext);
-    console.log(useContext(ThrottleControllerContext));
-    const onThrottleCheckboxChange = (_event: ChangeEvent<HTMLInputElement>) => {
+    const { active: useThrottle } = useContextValues(ThrottleControllerContext);
+    const setUseThrottle = useContextSetValues(ThrottleControllerContext);
+    const onThrottleCheckboxChange = (_event: React.MouseEvent<HTMLInputElement>) => {
         setUseThrottle({
             key: 'active',
             value: !useThrottle,
         })
-    }
-
-    const [useTimeline, setUseTimeline] = useState(false);
-    const toggleTimeline = (_event: MouseEvent<HTMLButtonElement>) => {
-        setUseTimeline(!useTimeline);   
     }
 
     const [_, remainingTime, { startTimer, resetTimer }] = useCircularTimer({ totalTime: 5000 });
@@ -82,20 +60,25 @@ const DebounceThrottle = () => {
             <span> - VS - </span>
             <span> Throttle </span>
         </div>
-        <div className={ `checkboxes-wrapper ${ useAdvance ? 'advance-panel-open' : '' }` }>
-            <div className="checkbox-wrapper debounce">
-                <label className="checkbox-label" htmlFor="debounce"> Debounce </label>
-                <input className="checkbox-input debounce" id="debounce" type="checkbox" onChange={ onDebounceCheckboxChange }/>
-            </div>
-            <div className="checkbox-wrapper throttle">
-                <input className="checkbox-input throttle" id="throttle" type="checkbox" onChange={ onThrottleCheckboxChange }/>
-                <label className="checkbox-label" htmlFor="throttle"> Throttle </label>
-            </div>
+        <div className="checkboxes-wrapper">
+            <Checkbox 
+                className="debounce" 
+                name="debounce" 
+                onClickCallback={ onDebounceCheckboxChange } 
+                label="Debounce"
+            />
+            <Checkbox
+                className="throttle" 
+                name="throttle" 
+                onClickCallback={ onThrottleCheckboxChange } 
+                label="Throttle"
+                labelPosition={ LabelPositon.RIGHT }
+            />
         </div>
         <AdvanceController />
         <InputController startTimer={startTimer} resetTimer={resetTimer}/>
-        <ResultsController useDebounce={useDebounce} useThrottle={useThrottle} remainingTime={remainingTime} resetTimer={resetTimer}  toggleTimeline={toggleTimeline}/>
-        <TimelineController active={useTimeline}/>
+        <ResultsController useDebounce={useDebounce} useThrottle={useThrottle} remainingTime={remainingTime} resetTimer={resetTimer}/>
+        <TimelineController />
     </div>
 }
 

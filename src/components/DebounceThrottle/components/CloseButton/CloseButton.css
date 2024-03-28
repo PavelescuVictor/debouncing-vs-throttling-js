@@ -1,0 +1,46 @@
+.CloseButton {
+    position: absolute;
+    z-index: 1000;
+    top: -22px;
+    right: -22px;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: buttonface;
+    transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out, transform 0.4s ease-in-out;
+    cursor: pointer;
+    outline: 24px solid #242424;
+
+    & .line {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        width: 36px;
+        height: 6px;
+        background-color: #242424;
+        border-radius: 12px;
+        transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+
+        &:first-child {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &:last-child {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    }
+
+    &:hover {
+        background-color: #ff6464;
+        border-radius: 50%;
+        transform: rotate(180deg);
+        transition: background-color 0.2s ease-in-out, border-radius 0.2s ease-in-out, transform 0.4s ease-in-out 0.2s;
+
+        & .line {
+            width: 32px;
+            height: 8px;
+        }
+    }
+}

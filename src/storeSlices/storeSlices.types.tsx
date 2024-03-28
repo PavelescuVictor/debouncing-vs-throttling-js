@@ -10,9 +10,13 @@ import {
 import {
     IInitialState as ThrottleControllerSliceInitialState
 } from './ThrottleControllerSlice/ThrottleControllerSlice.types';
+import {
+    IInitialState as TimelineControllerSliceInitialState
+} from './TimelineControllerSlice/TimelineControllerSlice.types';
 
 export type StoreSlicesType = 
     AdvanceControllerSliceInitialState | 
     DebounceControllerSliceInitialState |
     ResultsControllerSliceInitialState |
-    ThrottleControllerSliceInitialState;
+    ThrottleControllerSliceInitialState |
+    TimelineControllerSliceInitialState;
